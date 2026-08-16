@@ -4,55 +4,58 @@
     if (!road) return;
 
     const steps = [
-      ['01','Profile Collection','Resume, skills, experience, visa, location and target roles.','PROFILE'],
-      ['02','Skill Mapping','Match your background to USA demand and role requirements.','ASSESS'],
-      ['03','ATS + Resume','Optimize keywords, structure and recruiter readability.','OPTIMIZE'],
-      ['04','Job Targeting','Define roles, locations and employment strategy.','TARGET'],
-      ['05','Daily Applications','Run targeted applications across relevant channels.','APPLY'],
-      ['06','Recruiter Outreach','Market your profile to recruiters, vendors and hiring teams.','OUTREACH'],
-      ['07','Follow-ups','Track responses, follow up and re-submit to matching needs.','FOLLOW UP'],
-      ['08','Interviews','Move screening, technical and client rounds forward.','INTERVIEW'],
-      ['09','Interview Support','Prepare around the JD, resume, questions and format.','SUPPORT'],
-      ['10','Offer & Confirmation','Support offer review, rate discussion and confirmation.','OFFER']
+      ['01','Profile Collection','PROFILE','Start with the candidate.','Resume, skills, experience, visa, location and target roles are collected.','Complete profile → ready for assessment'],
+      ['02','Skill Mapping','ASSESS','Map the candidate.','Skills are matched against USA market demand and target job requirements.','Best-fit roles → focused target list'],
+      ['03','ATS + Resume','OPTIMIZE','Make the profile recruiter-ready.','Keywords, achievements, structure and ATS readability are optimized.','ATS-ready resume → stronger visibility'],
+      ['04','Job Targeting','TARGET','Define the search strategy.','Roles, locations, employment type and W2 / C2C / full-time strategy are selected.','Target list → campaign plan'],
+      ['05','Daily Applications','APPLY','Start the application campaign.','Targeted applications go to relevant portals, vendor networks and client sites.','Applications → responses / screening'],
+      ['06','Recruiter Outreach','OUTREACH','Market the candidate.','Recruiters, staffing vendors and relevant hiring contacts receive a concise profile pitch.','Outreach → recruiter responses'],
+      ['07','Follow-ups','FOLLOW UP','Keep opportunities moving.','Responses are tracked, follow-ups are sent and matching requirements trigger re-submission.','Active pipeline → screening calls'],
+      ['08','Interview Pipeline','INTERVIEW','Move into interview rounds.','Screening, technical and client interviews are tracked with JD and resume alignment.','Interview rounds → client decision'],
+      ['09','Interview Support','SUPPORT','Prepare for the final rounds.','JD walkthrough, resume alignment, question preparation, scheduling and interview guidance.','Prepared candidate → final round'],
+      ['10','Offer + Placement','OFFER','Convert the opportunity.','Offer/rate/package discussion, offer review and onboarding/job-confirmation support.','Offer accepted → placement / job confirmation']
     ];
+    const colors=['#2d91ff','#27cfa5','#8fd438','#ffb62d','#ff6875','#9b6cff','#4e91ff','#35c8ed','#36d99c','#ffb82f'];
 
-    road.className = 'road road-v3';
-    road.innerHTML = `
-      <div class="journey-topline-v3"><span>THE CANDIDATE JOURNEY</span><b>10 milestones · Profile → Offer</b></div>
-      <svg class="journey-svg-v3" viewBox="0 0 1200 560" preserveAspectRatio="xMidYMid meet" role="img" aria-label="USA job marketing roadmap">
-        <defs>
-          <linearGradient id="roadGradientV3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1688ff"/><stop offset=".35" stop-color="#31cfff"/><stop offset=".62" stop-color="#2bd6a1"/><stop offset=".82" stop-color="#ffb52e"/><stop offset="1" stop-color="#ff6674"/></linearGradient>
-          <filter id="roadGlowV3"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          <path id="journeyPathV3" d="M85 135 H1115 Q1160 135 1160 180 V190 Q1160 235 1115 235 H85 Q40 235 40 280 V390 Q40 435 85 435 H1115"/>
-        </defs>
-        <use href="#journeyPathV3" class="road-shadow-v3"/>
-        <use href="#journeyPathV3" class="road-surface-v3"/>
-        <use href="#journeyPathV3" class="road-center-v3"/>
-        <use href="#journeyPathV3" class="road-progress-v3"/>
-        <g class="road-markers-v3"><circle cx="85" cy="135" r="7"/><circle cx="360" cy="135" r="7"/><circle cx="635" cy="135" r="7"/><circle cx="910" cy="135" r="7"/><circle cx="1115" cy="190" r="7"/><circle cx="910" cy="235" r="7"/><circle cx="635" cy="235" r="7"/><circle cx="360" cy="235" r="7"/><circle cx="85" cy="280" r="7"/><circle cx="1115" cy="435" r="7"/></g>
-        <g class="journey-car-v3" aria-label="Animated campaign vehicle">
-          <rect x="-24" y="-10" width="48" height="20" rx="7"/><rect x="-12" y="-16" width="24" height="11" rx="4"/><circle cx="-14" cy="11" r="5"/><circle cx="14" cy="11" r="5"/>
-          <animateMotion dur="15s" repeatCount="indefinite" rotate="auto"><mpath href="#journeyPathV3"/></animateMotion>
-        </g>
-      </svg>
-      <div class="journey-nodes-v3 top"></div><div class="journey-nodes-v3 bottom"></div>
-      <div class="journey-start-v3"><span>START HERE</span><b>PROFILE</b></div>
-      <div class="journey-finish-v3"><span>DESTINATION</span><b>JOB CONFIRMED</b><i>✓</i></div>`;
+    const employee=(c)=>`<svg class="employee-v4" viewBox="0 0 90 155" aria-hidden="true"><circle cx="45" cy="17" r="13" fill="#efc4a5"/><path d="M32 16Q35 1 46 2Q57 3 59 17Q54 10 45 10Q37 10 32 16" fill="#202a3b"/><rect x="34" y="31" width="22" height="43" rx="9" fill="${c}"/><path d="M34 39L23 66M56 39L67 66" stroke="#efc4a5" stroke-width="7" stroke-linecap="round"/><path d="M39 73L35 120M51 73L56 120" stroke="#19283b" stroke-width="10" stroke-linecap="round"/><path d="M35 119L26 143M56 119L66 143" stroke="#efc4a5" stroke-width="7" stroke-linecap="round"/><path d="M22 144H32M61 144H72" stroke="#0e1827" stroke-width="6" stroke-linecap="round"/><rect x="55" y="38" width="14" height="9" rx="2" fill="#eaf4ff" opacity=".9"/></svg>`;
 
-    const top = road.querySelector('.journey-nodes-v3.top');
-    const bottom = road.querySelector('.journey-nodes-v3.bottom');
-    const makeNode = (s, i) => `<article class="journey-node-v3 n${i+1}" tabindex="0"><button type="button" class="node-pin-v3"><span>${s[0]}</span></button><div class="node-card-v3"><small>${s[3]}</small><h3>${s[1]}</h3><p>${s[2]}</p></div></article>`;
-    steps.slice(0,5).forEach((s,i) => top.insertAdjacentHTML('beforeend', makeNode(s,i)));
-    steps.slice(5).forEach((s,i) => bottom.insertAdjacentHTML('beforeend', makeNode(s,i+5)));
+    road.className='road road-v4';
+    road.innerHTML=`
+      <div class="road-v4-head"><div><span class="live-dot-v4"></span><b>CANDIDATE JOURNEY MAP</b></div><span>See exactly what happens at every stage</span></div>
+      <div class="road-map-v4">
+        <svg class="road-svg-v4" viewBox="0 0 1200 620" preserveAspectRatio="none" role="img" aria-label="Candidate journey from profile collection to job placement">
+          <defs>
+            <linearGradient id="roadV4" x1="0" x2="1"><stop stop-color="#258dff"/><stop offset=".3" stop-color="#2bd0a6"/><stop offset=".62" stop-color="#ffb52d"/><stop offset="1" stop-color="#ff6675"/></linearGradient>
+            <filter id="glowV4"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <path id="candidatePathV4" d="M95 125H1080Q1150 125 1150 190V215Q1150 275 1080 275H120Q50 275 50 345V420Q50 490 120 490H1080"/>
+          </defs>
+          <use href="#candidatePathV4" class="road-shadow-v4"/><use href="#candidatePathV4" class="road-surface-v4"/><use href="#candidatePathV4" class="road-line-v4"/><use href="#candidatePathV4" class="road-progress-v4"/>
+          <g class="road-dots-v4"><circle cx="95" cy="125" r="8"/><circle cx="340" cy="125" r="8"/><circle cx="585" cy="125" r="8"/><circle cx="830" cy="125" r="8"/><circle cx="1080" cy="215" r="8"/><circle cx="830" cy="275" r="8"/><circle cx="585" cy="275" r="8"/><circle cx="340" cy="275" r="8"/><circle cx="120" cy="345" r="8"/><circle cx="1080" cy="490" r="8"/></g>
+          <g class="car-v4"><rect x="-25" y="-10" width="50" height="20" rx="7"/><rect x="-12" y="-17" width="24" height="10" rx="4"/><circle cx="-14" cy="11" r="5"/><circle cx="14" cy="11" r="5"/><animateMotion dur="18s" repeatCount="indefinite" rotate="auto"><mpath href="#candidatePathV4"/></animateMotion></g>
+        </svg>
+        <div class="road-sign-v4 start">START<br><b>PROFILE</b></div><div class="road-sign-v4 finish">DESTINATION<br><b>JOB CONFIRMED ✓</b></div>
+        <div class="tree-v4 a">🌲</div><div class="tree-v4 b">🌳</div><div class="tree-v4 c">🌲</div><div class="tree-v4 d">🌳</div>
+        <div class="stage-layer-v4 top"></div><div class="stage-layer-v4 bottom"></div>
+      </div>
+      <div class="road-legend-v4"><span>01–05 PROFILE & CAMPAIGN</span><i>→</i><span>06–09 PIPELINE</span><i>→</i><strong>10 PLACEMENT</strong></div>`;
 
-    const all = [...road.querySelectorAll('.journey-node-v3')];
-    all.forEach((node,i) => {
-      const activate = () => { all.forEach((n,j) => n.classList.toggle('active', j === i)); };
-      node.addEventListener('mouseenter', activate);
-      node.addEventListener('focusin', activate);
-      node.addEventListener('click', activate);
-    });
-    all[0]?.classList.add('active');
+    const top=road.querySelector('.stage-layer-v4.top'), bottom=road.querySelector('.stage-layer-v4.bottom');
+    const stage=(s,i)=>`<article class="stage-v4 s${i+1}" style="--accent:${colors[i]}" tabindex="0"><div class="employee-v4-wrap">${employee(colors[i])}<span>${i<5?'WORKING':i<9?'IN PIPELINE':'PLACED'}</span></div><button class="pin-v4" type="button"><b>${s[0]}</b></button><div class="stage-card-v4"><small>${s[2]}</small><h3>${s[1]}</h3><strong>${s[3]}</strong><p>${s[4]}</p><div class="outcome-v4"><b>WHAT HAPPENS NEXT</b>${s[5]}</div></div></article>`;
+    steps.slice(0,5).forEach((s,i)=>top.insertAdjacentHTML('beforeend',stage(s,i)));
+    steps.slice(5).forEach((s,i)=>bottom.insertAdjacentHTML('beforeend',stage(s,i+5)));
+
+    const all=[...road.querySelectorAll('.stage-v4')];
+    const activate=i=>all.forEach((n,j)=>n.classList.toggle('active',i===j));
+    all.forEach((n,i)=>{n.addEventListener('mouseenter',()=>activate(i));n.addEventListener('focusin',()=>activate(i));n.querySelector('.pin-v4').addEventListener('click',()=>activate(i));});
+    activate(0);
+
+    if(!document.getElementById('roadmap-v4-css')){
+      const style=document.createElement('style');style.id='roadmap-v4-css';style.textContent=`
+      .road-v4{max-width:1240px!important;height:auto!important;margin:auto!important;padding:0 8px 20px!important;overflow:visible!important}.road-v4-head{height:48px;max-width:1160px;margin:auto;display:flex;justify-content:space-between;align-items:center;padding:0 12px;color:#8fa8c8;font-size:11px}.road-v4-head div{display:flex;gap:8px;align-items:center;color:#edf6ff}.live-dot-v4{width:8px;height:8px;border-radius:50%;background:#2cdaa0;box-shadow:0 0 0 5px rgba(44,218,160,.1),0 0 14px #2cdaa0;animation:liveV4 1.4s infinite}.road-map-v4{position:relative;max-width:1160px;height:650px;margin:auto;border-radius:24px;border:1px solid rgba(100,160,225,.14);background:radial-gradient(circle at 50% 45%,rgba(20,100,190,.1),transparent 48%),#020b20;overflow:hidden}.road-svg-v4{position:absolute;inset:0;width:100%;height:100%;z-index:1}.road-shadow-v4{fill:none;stroke:rgba(0,0,0,.6);stroke-width:92;stroke-linecap:round;stroke-linejoin:round;filter:url(#glowV4)}.road-surface-v4{fill:none;stroke:#1b2d46;stroke-width:78;stroke-linecap:round;stroke-linejoin:round}.road-line-v4{fill:none;stroke:#e5edf7;stroke-width:3;stroke-dasharray:18 15;stroke-linecap:round;opacity:.85}.road-progress-v4{fill:none;stroke:url(#roadV4);stroke-width:6;stroke-linecap:round;filter:url(#glowV4);stroke-dasharray:12 18;animation:flowV4 2s linear infinite}.road-dots-v4 circle{fill:#07182e;stroke:#3b9fff;stroke-width:3;filter:url(#glowV4)}.car-v4{fill:#ff5364;stroke:#fff;stroke-width:1.5;filter:drop-shadow(0 4px 8px rgba(0,0,0,.7))}.stage-layer-v4{position:absolute;inset:0;z-index:5}.stage-v4{position:absolute;width:205px;text-align:center;transform:translateX(-50%);outline:none}.top .s1{left:8%;top:5px}.top .s2{left:29%;top:5px}.top .s3{left:50%;top:5px}.top .s4{left:71%;top:5px}.top .s5{left:92%;top:5px}.bottom .s6{left:92%;top:340px}.bottom .s7{left:71%;top:340px}.bottom .s8{left:50%;top:340px}.bottom .s9{left:29%;top:340px}.bottom .s10{left:8%;top:340px}.employee-v4-wrap{height:104px;position:relative;display:flex;justify-content:center}.employee-v4{height:103px;width:60px;filter:drop-shadow(0 8px 8px rgba(0,0,0,.55));animation:floatV4 3s ease-in-out infinite}.employee-v4-wrap>span{position:absolute;top:3px;right:30px;padding:3px 5px;border:1px solid var(--accent);border-radius:9px;background:#06162d;color:var(--accent);font-size:5px;font-weight:900}.pin-v4{position:absolute;top:72px;left:50%;transform:translateX(-50%);width:39px;height:39px;border-radius:50%;border:2px solid var(--accent);background:#06172e;color:#fff;box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 12%,transparent),0 0 20px color-mix(in srgb,var(--accent) 38%,transparent);cursor:pointer;z-index:9}.pin-v4:after{content:'';position:absolute;width:2px;height:12px;background:var(--accent);left:50%;bottom:-13px}.pin-v4 b{font-size:9px}.stage-card-v4{margin:auto;padding:10px 11px;min-height:153px;text-align:left;border-radius:10px;background:linear-gradient(180deg,rgba(8,29,57,.98),rgba(4,18,37,.98));border:1px solid color-mix(in srgb,var(--accent) 60%,#17375b);box-shadow:0 15px 34px rgba(0,0,0,.28);transition:.3s}.stage-card-v4 small{font-size:6px;letter-spacing:.15em;color:var(--accent);font-weight:900}.stage-card-v4 h3{font:700 13px 'Space Grotesk',sans-serif;margin:3px 0;color:#f7fbff}.stage-card-v4 strong{display:block;color:#d8e7f7;font-size:7px;margin-bottom:5px}.stage-card-v4 p{font-size:7px;line-height:1.45;color:#91a8c4;margin:0 0 8px}.outcome-v4{border-top:1px solid rgba(120,170,220,.15);padding-top:7px;color:#c0d1e6;font-size:6.5px;line-height:1.4}.outcome-v4 b{display:block;color:#3fe0a2;font-size:6px;letter-spacing:.12em;margin-bottom:2px}.stage-v4.active{transform:translateX(-50%) translateY(-6px)}.stage-v4.active .stage-card-v4{border-color:var(--accent);box-shadow:0 18px 48px rgba(0,0,0,.4),0 0 25px color-mix(in srgb,var(--accent) 15%,transparent)}.stage-v4.active .employee-v4{transform:scale(1.08)}.road-sign-v4{position:absolute;z-index:7;background:#061a33;border:1px solid #2b8fff;border-radius:7px;padding:7px 10px;color:#79b9ff;font-size:6px;letter-spacing:.12em;text-align:center;box-shadow:0 7px 20px rgba(0,0,0,.3)}.road-sign-v4 b{color:#fff;font-size:8px}.road-sign-v4.start{left:10px;top:270px}.road-sign-v4.finish{right:10px;bottom:10px;border-color:#36d99c;color:#4fe0a8}.tree-v4{position:absolute;z-index:2;font-size:19px;opacity:.55}.tree-v4.a{left:16%;top:185px}.tree-v4.b{left:78%;top:300px}.tree-v4.c{left:16%;bottom:120px}.tree-v4.d{left:64%;top:300px}.road-legend-v4{max-width:900px;margin:13px auto 0;display:flex;justify-content:center;gap:14px;align-items:center;color:#7893b5;font-size:8px}.road-legend-v4 i{font-style:normal;color:#3aa5ff}.road-legend-v4 strong{color:#3bdca0}@keyframes flowV4{to{stroke-dashoffset:-60}}@keyframes floatV4{50%{transform:translateY(-4px)}}@keyframes liveV4{50%{opacity:.45;transform:scale(.8)}}
+      @media(max-width:900px){.road-map-v4{height:1120px}.road-v4-head{font-size:9px}.stage-v4{width:170px}.top .s1{left:18%;top:15px}.top .s2{left:50%;top:15px}.top .s3{left:82%;top:15px}.top .s4{left:30%;top:365px}.top .s5{left:70%;top:365px}.bottom .s6{left:18%;top:700px}.bottom .s7{left:50%;top:700px}.bottom .s8{left:82%;top:700px}.bottom .s9{left:30%;top:930px}.bottom .s10{left:70%;top:930px}.road-svg-v4{opacity:.9}.road-sign-v4{display:none}}
+      @media(max-width:560px){.road-map-v4{height:1600px}.road-v4-head{display:block;text-align:center;height:60px;padding-top:10px}.road-v4-head span{display:block;margin-top:5px}.stage-v4{width:180px}.top .s1,.top .s2,.top .s3,.top .s4,.top .s5,.bottom .s6,.bottom .s7,.bottom .s8,.bottom .s9,.bottom .s10{left:50%;}.top .s1{top:15px}.top .s2{top:315px}.top .s3{top:615px}.top .s4{top:915px}.top .s5{top:1215px}.bottom .s6,.bottom .s7,.bottom .s8,.bottom .s9,.bottom .s10{display:none}.road-svg-v4{transform:scaleX(.68);transform-origin:center}.car-v4{display:none}.road-legend-v4{flex-wrap:wrap;font-size:7px}}
+      `;document.head.appendChild(style);
+    }
   };
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load, {once:true}); else load();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load,{once:true});else load();
 })();
