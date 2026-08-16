@@ -29,14 +29,19 @@
           <linearGradient id="journeyRoad" x1="0" x2="1"><stop offset="0" stop-color="#2d91ff"/><stop offset=".42" stop-color="#2ad7aa"/><stop offset=".72" stop-color="#ffb52e"/><stop offset="1" stop-color="#ff6674"/></linearGradient>
           <filter id="roadGlow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         </defs>
-        <path class="road-shadow" d="M85 135 H1115 Q1160 135 1160 180 V190 Q1160 235 1115 235 H85 Q40 235 40 280 V390 Q40 435 85 435 H1115"/>
+        <path id="journeyPath" class="road-shadow" d="M85 135 H1115 Q1160 135 1160 180 V190 Q1160 235 1115 235 H85 Q40 235 40 280 V390 Q40 435 85 435 H1115"/>
         <path class="road-surface" d="M85 135 H1115 Q1160 135 1160 180 V190 Q1160 235 1115 235 H85 Q40 235 40 280 V390 Q40 435 85 435 H1115"/>
         <path class="road-dashes" pathLength="1000" d="M85 135 H1115 Q1160 135 1160 180 V190 Q1160 235 1115 235 H85 Q40 235 40 280 V390 Q40 435 85 435 H1115"/>
         <path class="journey-progress" pathLength="1000" d="M85 135 H1115 Q1160 135 1160 180 V190 Q1160 235 1115 235 H85 Q40 235 40 280 V390 Q40 435 85 435 H1115"/>
         <g class="road-marker"><circle cx="85" cy="135" r="7"/><circle cx="360" cy="135" r="7"/><circle cx="635" cy="135" r="7"/><circle cx="910" cy="135" r="7"/><circle cx="1115" cy="190" r="7"/><circle cx="910" cy="235" r="7"/><circle cx="635" cy="235" r="7"/><circle cx="360" cy="235" r="7"/><circle cx="85" cy="280" r="7"/><circle cx="1115" cy="435" r="7"/></g>
+        <g class="svg-road-car" aria-label="Animated campaign progress car">
+          <rect x="-17" y="-9" width="34" height="18" rx="6" fill="#ff5261" stroke="#ffd0d4" stroke-width="2"/>
+          <rect x="-7" y="-6" width="13" height="8" rx="2" fill="#d9f4ff"/>
+          <circle cx="-10" cy="9" r="4" fill="#101b2c"/><circle cx="10" cy="9" r="4" fill="#101b2c"/>
+          <animateMotion dur="14s" repeatCount="indefinite" rotate="auto"><mpath href="#journeyPath"/></animateMotion>
+        </g>
       </svg>
       <div class="journey-nodes journey-top"></div><div class="journey-nodes journey-bottom"></div>
-      <div class="journey-car" aria-hidden="true"><span>▶</span></div>
       <div class="journey-start"><span>START</span><b>PROFILE</b></div>
       <div class="journey-finish"><span>FINAL MILESTONE</span><b>JOB CONFIRMED</b><i>✓</i></div>`;
 
