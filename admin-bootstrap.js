@@ -1,0 +1,25 @@
+// Loads the admin control center without changing the existing app.js architecture.
+const fs = require('fs');
+const path = require('path');
+const Database = require('better-sqlite3');
+const express = require('express');
+const { attachAdmin } = require('./admin-api');
+
+// Load the persisted WhatsApp number before app.js creates its WA constant.
+try {
+  const dbPath = process.env.DB_PATH || path.join(__dirname, 'data', 'bookings.db');
+  if (fs.existsSync(dbPath)) {
+    const db = new Database(dbPath, { readonly: true });
+    const row = db.prepare("SELECT value FROM admin_settings WHERE key='whatsapp_number'").get();
+    if (row?.value) process.env.WHATSAPP_NUMBER = row.value;
+    db.close();
+  }
+} catch (e) {
+  console.warn('Admin settings bootstrap skipped:', e.message);
+}
+
+const originalListen = express.application.listen;
+express.application.listen = function (...args) {
+  try { attachAdmin(this); } catch (e) { console.error('Admin dashboard failed to attach:', e); }
+  return originalListen.apply(this, args);
+};
