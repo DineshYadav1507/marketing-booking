@@ -35,8 +35,8 @@ const journeys={
 };
 
 function addStyles(){
- if(document.getElementById('shavyaProcessFix'))return;
- const s=document.createElement('style');s.id='shavyaProcessFix';s.textContent=`
+ if(document.getElementById('talent-inspirationsProcessFix'))return;
+ const s=document.createElement('style');s.id='talent-inspirationsProcessFix';s.textContent=`
  .process-intro .roadmap{height:auto!important;min-height:0!important;overflow:visible!important;background:transparent!important;border:0!important;padding:0!important;display:block!important;}
  .process-intro .roadmap>.road{height:auto!important;min-height:0!important;overflow:visible!important;background:transparent!important;border:0!important;padding:0!important;display:block!important;}
  .sp-wrap{display:block!important;width:100%!important;max-width:1160px!important;margin:0 auto!important;box-sizing:border-box!important;}

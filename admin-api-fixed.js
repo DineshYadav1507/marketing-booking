@@ -2,7 +2,7 @@ const fs=require('fs');const path=require('path');const Database=require('better
 function attachAdmin(app){
  const dbPath=process.env.DB_PATH||path.join(__dirname,'data','bookings.db');fs.mkdirSync(path.dirname(dbPath),{recursive:true});const db=new Database(dbPath);db.pragma('journal_mode=WAL');
  db.exec('CREATE TABLE IF NOT EXISTS admin_settings(key TEXT PRIMARY KEY,value TEXT NOT NULL,updated_at TEXT NOT NULL)');
- const seed={business_name:'Shavya Talent Recruitment',whatsapp_number:process.env.WHATSAPP_NUMBER||'+918563019149',owner_email:process.env.OWNER_EMAIL||'dineshmca500@gmail.com',notification_email:process.env.OWNER_EMAIL||'dineshmca500@gmail.com',timezone:'America/New_York'};
+ const seed={business_name:'Talent Inspirations',whatsapp_number:process.env.WHATSAPP_NUMBER||'+918563019149',owner_email:process.env.OWNER_EMAIL||'dineshmca500@gmail.com',notification_email:process.env.OWNER_EMAIL||'dineshmca500@gmail.com',timezone:'America/New_York'};
  const ins=db.prepare('INSERT OR IGNORE INTO admin_settings(key,value,updated_at) VALUES(?,?,?)');for(const k in seed)ins.run(k,String(seed[k]),new Date().toISOString());
  const token=()=>process.env.ADMIN_TOKEN||'change-this-admin-token';const clean=(v,n=500)=>String(v??'').trim().slice(0,n);const getSettings=()=>Object.fromEntries(db.prepare('SELECT key,value FROM admin_settings').all().map(x=>[x.key,x.value]));
  function auth(req,res,next){if((req.get('x-admin-token')||'')!==token())return res.status(401).json({error:'Unauthorized'});next()}

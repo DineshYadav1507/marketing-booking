@@ -2,7 +2,7 @@
   "name": "usa-job-application-marketing",
   "version": "2.4.0",
   "private": true,
-  "description": "Shavya Talent Recruitment — USA staffing, candidate recruitment, project recruiting, career support and resume intelligence.",
+  "description": "Talent Inspirations — USA staffing, candidate recruitment, project recruiting, career support and resume intelligence.",
   "main": "app.js",
   "scripts": {"start": "node -r ./admin-bootstrap.js app.js", "dev": "node -r ./admin-bootstrap.js --watch app.js"},
   "engines": {"node": ">=20"},
