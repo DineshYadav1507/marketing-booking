@@ -1,0 +1,68 @@
+name: Apply Talent Inspirations brand
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-talent-inspirations-brand.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  rename-brand:
+    if: "!contains(github.event.head_commit.message, '[talent-brand]')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Replace brand references
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess
+
+          replacements = {
+              'Shavya Talent Recruitment': 'Talent Inspirations',
+              'SHAVYA TALENT RECRUITMENT': 'TALENT INSPIRATIONS',
+              'shavya-talent-recruitment': 'talent-inspirations',
+              'shavya-talent': 'talent-inspirations',
+              'shavya': 'talent-inspirations',
+              'Shavya': 'Talent Inspirations',
+              'SHAVYA': 'TALENT INSPIRATIONS',
+          }
+
+          files = subprocess.check_output(['git', 'ls-files'], text=True).splitlines()
+          changed = []
+          for name in files:
+              p = Path(name)
+              if not p.is_file():
+                  continue
+              try:
+                  text = p.read_text(encoding='utf-8')
+              except (UnicodeDecodeError, OSError):
+                  continue
+              original = text
+              for old, new in replacements.items():
+                  text = text.replace(old, new)
+              if text != original:
+                  p.write_text(text, encoding='utf-8')
+                  changed.append(name)
+
+          print('Updated files:', changed)
+          PY
+
+      - name: Commit brand update
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if git diff --cached --quiet; then
+            echo 'No brand references needed updating.'
+            exit 0
+          fi
+          git commit -m 'Rename brand to Talent Inspirations [talent-brand]'
+          git push
