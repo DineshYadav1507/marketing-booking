@@ -25,3 +25,4 @@ if(form){form.addEventListener('submit',async e=>{e.preventDefault();if(!chosenT
 function showSuccess(out){const title=toast.querySelector('b'),small=toast.querySelector('small');title.textContent='Call request confirmed';small.innerHTML=`Booking ID: <b>${out.booking.public_id}</b> · <a href="${out.calendar_url}" target="_blank" rel="noopener noreferrer">Add to Calendar</a>${out.whatsapp_url?` · <a href="${out.whatsapp_url}" target="_blank" rel="noopener noreferrer">WhatsApp Dinesh</a>`:''}`;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),12000);form.reset();chosenTime='';updateSlotLabel();loadAvailability()}
 loadAvailability();
 (function loadAdvancedShowcase(){const s=document.createElement('script');s.src='showcase.js';s.defer=true;document.body.appendChild(s)})();
+(function loadContentRepair(){const s=document.createElement('script');s.src='ui-content-fixes.js?v=20260913';s.defer=true;document.body.appendChild(s)})();
