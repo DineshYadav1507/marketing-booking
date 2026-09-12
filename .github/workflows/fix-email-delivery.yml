@@ -1,0 +1,49 @@
+name: Fix Talent Inspirations Email Delivery
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/fix-email-delivery.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-email:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch transactional email flows
+        env:
+          PYTHONIOENCODING: utf-8
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('app.js')
+          s=p.read_text()
+          old="async function email(b){if(!mailer)return false;await mailer.sendMail({from:process.env.SMTP_FROM||OWNER,to:OWNER,subject:`New USA Job Marketing Call — ${b.name}`,text:`New booking\\n\\nCandidate: ${b.name}\\nCountry: ${b.country}\\nVisa: ${b.visa}\\nWhatsApp: ${b.whatsapp}\\nRequirement: ${b.requirement}\\nDate: ${b.booking_date}\\nTime: ${b.booking_time} (USA Eastern Time)\\nMessage: ${b.message||'Not provided'}\\n\\nCalendar: ${BASE}/api/bookings/${b.public_id}/ics`});return true}"
+          new="""async function email(b){if(!mailer)return false;const from=process.env.SMTP_FROM||OWNER;const adminText=`New Talent Inspirations booking\\n\\nCandidate: ${b.name}\\nCountry: ${b.country}\\nVisa: ${b.visa}\\nWhatsApp: ${b.whatsapp}\\nRequirement: ${b.requirement}\\nDate: ${b.booking_date}\\nTime: ${b.booking_time} (USA Eastern Time)\\nMessage: ${b.message||'Not provided'}\\nBooking ID: ${b.public_id}\\n\\nCalendar: ${BASE}/api/bookings/${b.public_id}/ics`;const candidateEmail=String(b.email||'').trim();await mailer.sendMail({from,to:OWNER,subject:`New USA Job Marketing Call — ${b.name}`,text:adminText});if(candidateEmail&&candidateEmail.includes('@')){await mailer.sendMail({from,to:candidateEmail,subject:`Talent Inspirations — Booking Confirmation (${b.public_id})`,text:`Hi ${b.name},\\n\\nThank you for booking a career support call with Talent Inspirations.\\n\\nBooking ID: ${b.public_id}\\nDate: ${b.booking_date}\\nTime: ${b.booking_time} (USA Eastern Time)\\nRequirement: ${b.requirement}\\n\\nWe will review your information and follow up regarding the next steps. This service provides structured career and job-search support; employment and interview outcomes are determined by employers.\\n\\nCalendar: ${BASE}/api/bookings/${b.public_id}/ics\\n\\nTalent Inspirations\\nUSA Staffing • Recruitment • Career Support`});}return true}"""
+          if old not in s:
+              raise SystemExit('booking email function pattern not found')
+          s=s.replace(old,new,1)
+          s=s.replace("whatsapp:clean(q.body.whatsapp,40),requirement:","whatsapp:clean(q.body.whatsapp,40),email:clean(q.body.email,160),requirement:",1)
+          s=s.replace("WhatsApp: ${b.whatsapp}\\nRequirement:","WhatsApp: ${b.whatsapp}\\nEmail: ${b.email||'Not provided'}\\nRequirement:",1)
+          old_resume="if(mailer){try{await mailer.sendMail({from:process.env.SMTP_FROM||OWNER,to:OWNER,subject:`Resume Intelligence Report — ${name}`,text:`Resume review request\\n\\nName: ${name}\\nEmail: ${emailAddr}\\nWhatsApp: ${whatsapp||'Not provided'}\\nCountry: ${country||'Not provided'}\\nTarget role: ${targetRole||'Not provided'}\\nFile: ${req.file.originalname}\\nReview ID: ${publicId}\\nATS-style score: ${analysis.ats_score}/100\\nKeyword match: ${analysis.keyword_match}%\\nMatched: ${analysis.matched_keywords.join(', ')||'None'}\\nMissing suggestions: ${analysis.missing_keywords.join(', ')||'None'}\\nPortfolio preview: ${BASE}/portfolio/${slug}`})}catch(e){console.error('Resume email:',e.message)}}"
+          new_resume="if(mailer){try{const from=process.env.SMTP_FROM||OWNER;await mailer.sendMail({from,to:OWNER,subject:`Resume Intelligence Report — ${name}`,text:`Resume review request\\n\\nName: ${name}\\nEmail: ${emailAddr}\\nWhatsApp: ${whatsapp||'Not provided'}\\nCountry: ${country||'Not provided'}\\nTarget role: ${targetRole||'Not provided'}\\nFile: ${req.file.originalname}\\nReview ID: ${publicId}\\nATS-style score: ${analysis.ats_score}/100\\nKeyword match: ${analysis.keyword_match}%\\nMatched: ${analysis.matched_keywords.join(', ')||'None'}\\nMissing suggestions: ${analysis.missing_keywords.join(', ')||'None'}\\nPortfolio preview: ${BASE}/portfolio/${slug}`});await mailer.sendMail({from,to:emailAddr,subject:`Talent Inspirations — Resume Review Received (${publicId})`,text:`Hi ${name},\\n\\nWe received your resume successfully.\\n\\nReview ID: ${publicId}\\nTarget role: ${targetRole||'Not provided'}\\nATS-style readiness score: ${analysis.ats_score}/100\\nKeyword alignment: ${analysis.keyword_match}%\\n\\nYour resume has been processed for an initial ATS-style review. This is a career-support assessment, not a guarantee of employment or interview selection.\\n\\nTalent Inspirations\\nUSA Staffing • Recruitment • Career Support`})}catch(e){console.error('Resume email:',e.message)}}"
+          if old_resume not in s:
+              raise SystemExit('resume email block pattern not found')
+          s=s.replace(old_resume,new_resume,1)
+          p.write_text(s)
+          PY
+      - name: Commit patch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app.js
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+          else
+            git commit -m "fix: send booking and resume confirmation emails"
+            git push
+          fi
